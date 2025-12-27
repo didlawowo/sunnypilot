@@ -107,39 +107,40 @@
     <name>AutoLaneChangeTimer</name>
     <message>
         <source>Auto Lane Change by Blinker</source>
-        <translation type="unfinished"></translation>
+        <translation>Changement de voie auto par clignotant</translation>
     </message>
     <message>
         <source>Set a timer to delay the auto lane change operation when the blinker is used. No nudge on the steering wheel is required to auto lane change if a timer is set. Default is Nudge.
 Please use caution when using this feature. Only use the blinker when traffic and road conditions permit.</source>
-        <translation type="unfinished"></translation>
+        <translation>Définir un délai pour retarder le changement de voie automatique lorsque le clignotant est utilisé. Aucune impulsion sur le volant n&apos;est requise si un délai est défini. Par défaut : Impulsion.
+Utilisez cette fonction avec prudence. N&apos;utilisez le clignotant que lorsque le trafic et les conditions routières le permettent.</translation>
     </message>
     <message>
         <source>s</source>
-        <translation type="unfinished"></translation>
+        <translation>s</translation>
     </message>
     <message>
         <source>Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Désactivé</translation>
     </message>
     <message>
         <source>Nudge</source>
-        <translation type="unfinished"></translation>
+        <translation>Impulsion</translation>
     </message>
     <message>
         <source>Nudgeless</source>
-        <translation type="unfinished"></translation>
+        <translation>Sans impulsion</translation>
     </message>
 </context>
 <context>
     <name>Brightness</name>
     <message>
         <source>Auto (Dark)</source>
-        <translation type="unfinished"></translation>
+        <translation>Auto (Sombre)</translation>
     </message>
     <message>
         <source>Auto</source>
-        <translation type="unfinished"></translation>
+        <translation>Auto</translation>
     </message>
     <message>
         <source>Global Brightness</source>
@@ -147,7 +148,7 @@ Please use caution when using this feature. Only use the blinker when traffic an
     </message>
     <message>
         <source>Overrides the brightness of the device. This applies to both onroad and offroad screens. </source>
-        <translation type="unfinished"></translation>
+        <translation>Remplace la luminosité de l&apos;appareil. S&apos;applique aux écrans en route et à l&apos;arrêt.</translation>
     </message>
 </context>
 <context>
@@ -196,67 +197,68 @@ Please use caution when using this feature. Only use the blinker when traffic an
     </message>
     <message>
         <source>Enable ADB</source>
-        <translation type="unfinished"></translation>
+        <translation>Activer ADB</translation>
     </message>
     <message>
         <source>ADB (Android Debug Bridge) allows connecting to your device over USB or over the network. See https://docs.comma.ai/how-to/connect-to-comma for more info.</source>
-        <translation type="unfinished"></translation>
+        <translation>ADB (Android Debug Bridge) permet de se connecter à votre appareil via USB ou réseau. Voir https://docs.comma.ai/how-to/connect-to-comma pour plus d&apos;infos.</translation>
     </message>
     <message>
         <source>On this car, sunnypilot defaults to the car&apos;s built-in ACC instead of openpilot&apos;s longitudinal control. Enable this to switch to openpilot longitudinal control. Enabling Experimental mode is recommended when enabling openpilot longitudinal control alpha.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sur ce véhicule, sunnypilot utilise par défaut le régulateur adaptatif intégré au lieu du contrôle longitudinal openpilot. Activez ceci pour passer au contrôle longitudinal openpilot. Il est recommandé d&apos;activer le mode Expérimental avec le contrôle longitudinal alpha.</translation>
     </message>
 </context>
 <context>
     <name>DeveloperPanelSP</name>
     <message>
         <source>Show Advanced Controls</source>
-        <translation type="unfinished"></translation>
+        <translation>Afficher les contrôles avancés</translation>
     </message>
     <message>
         <source>Toggle visibility of advanced sunnypilot controls.
 This only toggles the visibility of the controls; it does not toggle the actual control enabled/disabled state.</source>
-        <translation type="unfinished"></translation>
+        <translation>Afficher/masquer les contrôles avancés de sunnypilot.
+Cela ne modifie que la visibilité, pas l&apos;état activé/désactivé des contrôles.</translation>
     </message>
     <message>
         <source>Enable GitHub runner service</source>
-        <translation type="unfinished"></translation>
+        <translation>Activer le service GitHub runner</translation>
     </message>
     <message>
         <source>Enables or disables the github runner service.</source>
-        <translation type="unfinished"></translation>
+        <translation>Active ou désactive le service GitHub runner.</translation>
     </message>
     <message>
         <source>Enable Quickboot Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Activer le mode démarrage rapide</translation>
     </message>
     <message>
         <source>Error Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Journal d&apos;erreurs</translation>
     </message>
     <message>
         <source>VIEW</source>
-        <translation type="unfinished">VOIR</translation>
+        <translation>VOIR</translation>
     </message>
     <message>
         <source>View the error log for sunnypilot crashes.</source>
-        <translation type="unfinished"></translation>
+        <translation>Voir le journal d&apos;erreurs des plantages sunnypilot.</translation>
     </message>
     <message>
         <source>When toggled on, this creates a prebuilt file to allow accelerated boot times. When toggled off, it immediately removes the prebuilt file so compilation of locally edited cpp files can be made. &lt;br&gt;&lt;br&gt;&lt;b&gt;To edit C++ files locally on device, you MUST first turn off this toggle so the changes can recompile.&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Lorsqu&apos;activé, crée un fichier précompilé pour accélérer le démarrage. Lorsque désactivé, supprime immédiatement ce fichier pour permettre la compilation des fichiers cpp modifiés localement.&lt;br&gt;&lt;br&gt;&lt;b&gt;Pour modifier des fichiers C++ localement, vous DEVEZ d&apos;abord désactiver cette option.&lt;/b&gt;</translation>
     </message>
     <message>
         <source>Quickboot mode requires updates to be disabled.&lt;br&gt;Enable &apos;Disable Updates&apos; in the Software panel first.</source>
-        <translation type="unfinished"></translation>
+        <translation>Le mode démarrage rapide nécessite que les mises à jour soient désactivées.&lt;br&gt;Activez d&apos;abord &apos;Désactiver les mises à jour&apos; dans le panneau Logiciel.</translation>
     </message>
     <message>
         <source>Enable Copyparty service</source>
-        <translation type="unfinished"></translation>
+        <translation>Activer le service Copyparty</translation>
     </message>
     <message>
         <source>Copyparty is a very capable file server, you can use it to download your routes, view your logs and even make some edits on some files from your browser. Requires you to connect to your comma locally via it&apos;s IP.</source>
-        <translation type="unfinished"></translation>
+        <translation>Copyparty est un serveur de fichiers complet, vous pouvez l&apos;utiliser pour télécharger vos trajets, consulter vos logs et même modifier certains fichiers depuis votre navigateur. Nécessite une connexion locale à votre comma via son IP.</translation>
     </message>
 </context>
 <context>
@@ -506,7 +508,7 @@ Steering lag calibration is complete.</source>
     </message>
     <message>
         <source>Reset</source>
-        <translation type="unfinished">Réinitialiser</translation>
+        <translation>Réinitialiser</translation>
     </message>
     <message>
         <source>The reset cannot be undone. You have been warned.</source>
@@ -561,27 +563,27 @@ This is the time after which settings UI closes automatically if user is not int
     <name>DriveStats</name>
     <message>
         <source>Drives</source>
-        <translation type="unfinished"></translation>
+        <translation>Trajets</translation>
     </message>
     <message>
         <source>Hours</source>
-        <translation type="unfinished"></translation>
+        <translation>Heures</translation>
     </message>
     <message>
         <source>ALL TIME</source>
-        <translation type="unfinished"></translation>
+        <translation>TOTAL</translation>
     </message>
     <message>
         <source>PAST WEEK</source>
-        <translation type="unfinished"></translation>
+        <translation>SEMAINE PASSÉE</translation>
     </message>
     <message>
         <source>KM</source>
-        <translation type="unfinished"></translation>
+        <translation>KM</translation>
     </message>
     <message>
         <source>Miles</source>
-        <translation type="unfinished"></translation>
+        <translation>Miles</translation>
     </message>
 </context>
 <context>
@@ -595,15 +597,15 @@ This is the time after which settings UI closes automatically if user is not int
     <name>ExitOffroadButton</name>
     <message>
         <source>Are you sure you want to exit Always Offroad mode?</source>
-        <translation type="unfinished"></translation>
+        <translation>Êtes-vous sûr de vouloir quitter le mode Toujours hors route ?</translation>
     </message>
     <message>
         <source>Confirm</source>
-        <translation type="unfinished"></translation>
+        <translation>Confirmer</translation>
     </message>
     <message>
         <source>EXIT ALWAYS OFFROAD MODE</source>
-        <translation type="unfinished"></translation>
+        <translation>QUITTER LE MODE TOUJOURS HORS ROUTE</translation>
     </message>
 </context>
 <context>
@@ -701,11 +703,13 @@ This is the time after which settings UI closes automatically if user is not int
         <source>sunnypilot learns to drive by watching humans, like you, drive.
 
 Firehose Mode allows you to maximize your training data uploads to improve openpilot&apos;s driving models. More data means bigger models, which means better Experimental Mode.</source>
-        <translation type="unfinished"></translation>
+        <translation>sunnypilot apprend à conduire en observant des humains, comme vous, conduire.
+
+Le mode Firehose vous permet de maximiser vos envois de données d&apos;entraînement pour améliorer les modèles de conduite d&apos;openpilot. Plus de données signifie de plus gros modèles, ce qui signifie un meilleur mode expérimental.</translation>
     </message>
     <message>
         <source>For maximum effectiveness, bring your device inside and connect to a good USB-C adapter and Wi-Fi weekly.&lt;br&gt;&lt;br&gt;Firehose Mode can also work while you&apos;re driving if connected to a hotspot or unlimited SIM card.&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;Frequently Asked Questions&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;i&gt;Does it matter how or where I drive?&lt;/i&gt; Nope, just drive as you normally would.&lt;br&gt;&lt;br&gt;&lt;i&gt;Do all of my segments get pulled in Firehose Mode?&lt;/i&gt; No, we selectively pull a subset of your segments.&lt;br&gt;&lt;br&gt;&lt;i&gt;What&apos;s a good USB-C adapter?&lt;/i&gt; Any fast phone or laptop charger should be fine.&lt;br&gt;&lt;br&gt;&lt;i&gt;Does it matter which software I run?&lt;/i&gt; Yes, only upstream sunnypilot (and particular forks) are able to be used for training.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pour une efficacité maximale, rentrez votre appareil à l&apos;intérieur et connectez-le à un bon adaptateur USB-C et au Wi-Fi chaque semaine.&lt;br&gt;&lt;br&gt;Le mode Firehose peut aussi fonctionner pendant que vous conduisez si vous êtes connecté à un hotspot ou une carte SIM illimitée.&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;Questions fréquentes&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;i&gt;Est-ce important comment ou où je conduis ?&lt;/i&gt; Non, conduisez simplement comme d&apos;habitude.&lt;br&gt;&lt;br&gt;&lt;i&gt;Tous mes segments sont-ils récupérés en mode Firehose ?&lt;/i&gt; Non, nous récupérons sélectivement un sous-ensemble de vos segments.&lt;br&gt;&lt;br&gt;&lt;i&gt;Qu&apos;est-ce qu&apos;un bon adaptateur USB-C ?&lt;/i&gt; N&apos;importe quel chargeur rapide de téléphone ou ordinateur portable devrait convenir.&lt;br&gt;&lt;br&gt;&lt;i&gt;Est-ce important quel logiciel j&apos;utilise ?&lt;/i&gt; Oui, seul sunnypilot officiel (et certains forks) peuvent être utilisés pour l&apos;entraînement.</translation>
     </message>
 </context>
 <context>
@@ -727,11 +731,11 @@ Firehose Mode allows you to maximize your training data uploads to improve openp
     <name>HudRendererSP</name>
     <message>
         <source>km/h</source>
-        <translation type="unfinished">km/h</translation>
+        <translation>km/h</translation>
     </message>
     <message>
         <source>mph</source>
-        <translation type="unfinished">mi/h</translation>
+        <translation>mi/h</translation>
     </message>
     <message>
         <source>GREEN
@@ -779,50 +783,50 @@ DEVANT</translation>
     </message>
     <message>
         <source>MAX</source>
-        <translation type="unfinished">MAX</translation>
+        <translation>MAX</translation>
     </message>
 </context>
 <context>
     <name>HyundaiSettings</name>
     <message>
         <source>Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Désactivé</translation>
     </message>
     <message>
         <source>Dynamic</source>
-        <translation type="unfinished"></translation>
+        <translation>Dynamique</translation>
     </message>
     <message>
         <source>Predictive</source>
-        <translation type="unfinished"></translation>
+        <translation>Prédictif</translation>
     </message>
     <message>
         <source>Custom Longitudinal Tuning</source>
-        <translation type="unfinished"></translation>
+        <translation>Réglage longitudinal personnalisé</translation>
     </message>
     <message>
         <source>This feature can only be used with openpilot longitudinal control enabled.</source>
-        <translation type="unfinished"></translation>
+        <translation>Cette fonction ne peut être utilisée qu&apos;avec le contrôle longitudinal openpilot activé.</translation>
     </message>
     <message>
         <source>Enable &quot;Always Offroad&quot; in Device panel, or turn vehicle off to select an option.</source>
-        <translation type="unfinished"></translation>
+        <translation>Activez « Toujours hors route » dans le panneau Appareil, ou éteignez le véhicule pour sélectionner une option.</translation>
     </message>
     <message>
         <source>Off: Uses default tuning</source>
-        <translation type="unfinished"></translation>
+        <translation>Désactivé : Utilise le réglage par défaut</translation>
     </message>
     <message>
         <source>Dynamic: Adjusts acceleration limits based on current speed</source>
-        <translation type="unfinished"></translation>
+        <translation>Dynamique : Ajuste les limites d&apos;accélération selon la vitesse actuelle</translation>
     </message>
     <message>
         <source>Predictive: Uses future trajectory data to anticipate needed adjustments</source>
-        <translation type="unfinished"></translation>
+        <translation>Prédictif : Utilise les données de trajectoire future pour anticiper les ajustements nécessaires</translation>
     </message>
     <message>
         <source>Fine-tune your driving experience by adjusting acceleration smoothness with openpilot longitudinal control.</source>
-        <translation type="unfinished"></translation>
+        <translation>Affinez votre expérience de conduite en ajustant la fluidité de l&apos;accélération avec le contrôle longitudinal openpilot.</translation>
     </message>
 </context>
 <context>
@@ -843,15 +847,15 @@ DEVANT</translation>
     <name>LaneChangeSettings</name>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Retour</translation>
+        <translation>Retour</translation>
     </message>
     <message>
         <source>Auto Lane Change: Delay with Blind Spot</source>
-        <translation type="unfinished"></translation>
+        <translation>Changement de voie auto : Délai avec angle mort</translation>
     </message>
     <message>
         <source>Toggle to enable a delay timer for seamless lane changes when blind spot monitoring (BSM) detects a obstructing vehicle, ensuring safe maneuvering.</source>
-        <translation type="unfinished"></translation>
+        <translation>Activez pour ajouter un délai lors des changements de voie quand la surveillance d&apos;angle mort (BSM) détecte un véhicule gênant, assurant une manœuvre sécuritaire.</translation>
     </message>
 </context>
 <context>
@@ -878,23 +882,23 @@ DEVANT</translation>
     </message>
     <message>
         <source>Pause lateral control with blinker when traveling below the desired speed selected.</source>
-        <translation type="unfinished"></translation>
+        <translation>Suspendre le contrôle latéral avec le clignotant lorsque vous roulez sous la vitesse désirée sélectionnée.</translation>
     </message>
     <message>
         <source>Enables independent engagements of Automatic Lane Centering (ALC) and Adaptive Cruise Control (ACC).</source>
-        <translation type="unfinished"></translation>
+        <translation>Permet l&apos;activation indépendante du centrage automatique de voie (ALC) et du régulateur de vitesse adaptatif (ACC).</translation>
     </message>
     <message>
         <source>Start the vehicle to check vehicle compatibility.</source>
-        <translation type="unfinished"></translation>
+        <translation>Démarrez le véhicule pour vérifier la compatibilité.</translation>
     </message>
     <message>
         <source>This platform supports all MADS settings.</source>
-        <translation type="unfinished"></translation>
+        <translation>Cette plateforme prend en charge tous les réglages MADS.</translation>
     </message>
     <message>
         <source>This platform supports limited MADS settings.</source>
-        <translation type="unfinished"></translation>
+        <translation>Cette plateforme prend en charge des réglages MADS limités.</translation>
     </message>
     <message>
         <source>Enforce Torque Lateral Control</source>
@@ -902,7 +906,7 @@ DEVANT</translation>
     </message>
     <message>
         <source>Enable this to enforce sunnypilot to steer with Torque lateral control.</source>
-        <translation type="unfinished"></translation>
+        <translation>Activez pour forcer sunnypilot à diriger avec le contrôle latéral par couple.</translation>
     </message>
     <message>
         <source>Customize Params</source>
@@ -913,11 +917,11 @@ DEVANT</translation>
     <name>LongitudinalPanel</name>
     <message>
         <source>Custom ACC Speed Increments</source>
-        <translation type="unfinished"></translation>
+        <translation>Incréments de vitesse ACC personnalisés</translation>
     </message>
     <message>
         <source>Enable custom Short &amp; Long press increments for cruise speed increase/decrease.</source>
-        <translation type="unfinished"></translation>
+        <translation>Activer les incréments personnalisés par appui court et long pour augmenter/diminuer la vitesse de croisière.</translation>
     </message>
     <message>
         <source>This feature can only be used with openpilot longitudinal control enabled.</source>
@@ -1055,7 +1059,7 @@ DEVANT</translation>
     </message>
     <message>
         <source> (default)</source>
-        <translation type="unfinished"></translation>
+        <translation> (par défaut)</translation>
     </message>
 </context>
 <context>
@@ -1066,7 +1070,7 @@ DEVANT</translation>
     </message>
     <message>
         <source>SELECT</source>
-        <translation type="unfinished">SÉLECTIONNER</translation>
+        <translation>SÉLECTIONNER</translation>
     </message>
     <message>
         <source>Clear Model Cache</source>
@@ -1078,19 +1082,19 @@ DEVANT</translation>
     </message>
     <message>
         <source>Driving Model</source>
-        <translation type="unfinished"></translation>
+        <translation>Modèle de conduite</translation>
     </message>
     <message>
         <source>Navigation Model</source>
-        <translation type="unfinished"></translation>
+        <translation>Modèle de navigation</translation>
     </message>
     <message>
         <source>Vision Model</source>
-        <translation type="unfinished"></translation>
+        <translation>Modèle de vision</translation>
     </message>
     <message>
         <source>Policy Model</source>
-        <translation type="unfinished"></translation>
+        <translation>Modèle de politique</translation>
     </message>
     <message>
         <source>Live Learning Steer Delay</source>
@@ -1098,20 +1102,21 @@ DEVANT</translation>
     </message>
     <message>
         <source>Adjust Software Delay</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajuster le délai logiciel</translation>
     </message>
     <message>
         <source>Adjust the software delay when Live Learning Steer Delay is toggled off.
 The default software delay value is 0.2</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajuster le délai logiciel lorsque l&apos;apprentissage en direct du délai de direction est désactivé.
+La valeur par défaut du délai logiciel est 0.2</translation>
     </message>
     <message>
         <source>  %1 - %2</source>
-        <translation type="unfinished"></translation>
+        <translation>  %1 - %2</translation>
     </message>
     <message>
         <source>downloaded</source>
-        <translation type="unfinished"></translation>
+        <translation>téléchargé</translation>
     </message>
     <message>
         <source>ready</source>
@@ -1464,11 +1469,13 @@ The default software delay value is 0.2</source>
         <source>This will delete ALL downloaded maps
 
 Are you sure you want to delete all the maps?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ceci supprimera TOUTES les cartes téléchargées
+
+Êtes-vous sûr de vouloir supprimer toutes les cartes ?</translation>
     </message>
     <message>
         <source>Yes, delete all the maps.</source>
-        <translation type="unfinished"></translation>
+        <translation>Oui, supprimer toutes les cartes.</translation>
     </message>
     <message>
         <source>Database Update</source>
@@ -1500,15 +1507,15 @@ Are you sure you want to delete all the maps?</source>
     </message>
     <message>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation>Tout</translation>
     </message>
     <message>
         <source>REFRESH</source>
-        <translation type="unfinished"></translation>
+        <translation>ACTUALISER</translation>
     </message>
     <message>
         <source>UPDATE</source>
-        <translation type="unfinished">MISE À JOUR</translation>
+        <translation>METTRE À JOUR</translation>
     </message>
     <message>
         <source>Download starting...</source>
@@ -2281,7 +2288,7 @@ Data</source>
     <name>SunnylinkPanel</name>
     <message>
         <source>This is the master switch, it will allow you to cutoff any sunnylink requests should you want to do that.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ceci est l&apos;interrupteur principal, il vous permet de couper toutes les requêtes sunnylink si vous le souhaitez.</translation>
     </message>
     <message>
         <source>Enable sunnylink</source>
@@ -2293,11 +2300,11 @@ Data</source>
     </message>
     <message>
         <source>SPONSOR</source>
-        <translation type="unfinished"></translation>
+        <translation>SPONSOR</translation>
     </message>
     <message>
         <source>Become a sponsor of sunnypilot to get early access to sunnylink features when they become available.</source>
-        <translation type="unfinished"></translation>
+        <translation>Devenez sponsor de sunnypilot pour obtenir un accès anticipé aux fonctionnalités sunnylink dès qu&apos;elles sont disponibles.</translation>
     </message>
     <message>
         <source>Pair GitHub Account</source>
@@ -2309,23 +2316,23 @@ Data</source>
     </message>
     <message>
         <source>Pair your GitHub account to grant your device sponsor benefits, including API access on sunnylink.</source>
-        <translation type="unfinished"></translation>
+        <translation>Associez votre compte GitHub pour accorder à votre appareil les avantages sponsor, incluant l&apos;accès API sur sunnylink.</translation>
     </message>
     <message>
         <source>N/A</source>
-        <translation type="unfinished">N/A</translation>
+        <translation>N/A</translation>
     </message>
     <message>
         <source>sunnylink Dongle ID not found. This may be due to weak internet connection or sunnylink registration issue. Please reboot and try again.</source>
-        <translation type="unfinished"></translation>
+        <translation>ID Dongle sunnylink introuvable. Cela peut être dû à une connexion internet faible ou un problème d&apos;enregistrement sunnylink. Veuillez redémarrer et réessayer.</translation>
     </message>
     <message>
         <source>🎉Welcome back! We&apos;re excited to see you&apos;ve enabled sunnylink again! 🚀</source>
-        <translation type="unfinished"></translation>
+        <translation>🎉Bon retour ! Nous sommes ravis de voir que vous avez réactivé sunnylink ! 🚀</translation>
     </message>
     <message>
         <source>👋Not going to lie, it&apos;s sad to see you disabled sunnylink 😢, but we&apos;ll be here when you&apos;re ready to come back 🎉.</source>
-        <translation type="unfinished"></translation>
+        <translation>👋On ne va pas mentir, c&apos;est triste de vous voir désactiver sunnylink 😢, mais nous serons là quand vous serez prêt à revenir 🎉.</translation>
     </message>
     <message>
         <source>Backup Settings</source>
@@ -2333,11 +2340,11 @@ Data</source>
     </message>
     <message>
         <source>Are you sure you want to backup sunnypilot settings?</source>
-        <translation type="unfinished"></translation>
+        <translation>Êtes-vous sûr de vouloir sauvegarder les paramètres de sunnypilot ?</translation>
     </message>
     <message>
         <source>Back Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Sauvegarder</translation>
     </message>
     <message>
         <source>Restore Settings</source>
@@ -2345,39 +2352,39 @@ Data</source>
     </message>
     <message>
         <source>Are you sure you want to restore the last backed up sunnypilot settings?</source>
-        <translation type="unfinished"></translation>
+        <translation>Êtes-vous sûr de vouloir restaurer la dernière sauvegarde des paramètres de sunnypilot ?</translation>
     </message>
     <message>
         <source>Restore</source>
-        <translation type="unfinished"></translation>
+        <translation>Restaurer</translation>
     </message>
     <message>
         <source>Backup in progress %1%</source>
-        <translation type="unfinished"></translation>
+        <translation>Sauvegarde en cours %1%</translation>
     </message>
     <message>
         <source>Backup Failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Échec de la sauvegarde</translation>
     </message>
     <message>
         <source>Settings backup completed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sauvegarde des paramètres terminée.</translation>
     </message>
     <message>
         <source>Restore in progress %1%</source>
-        <translation type="unfinished"></translation>
+        <translation>Restauration en cours %1%</translation>
     </message>
     <message>
         <source>Restore Failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Échec de la restauration</translation>
     </message>
     <message>
         <source>Unable to restore the settings, try again later.</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de restaurer les paramètres, réessayez plus tard.</translation>
     </message>
     <message>
         <source>Settings restored. Confirm to restart the interface.</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramètres restaurés. Confirmez pour redémarrer l&apos;interface.</translation>
     </message>
     <message>
         <source>Device ID</source>
@@ -2558,59 +2565,59 @@ Data</source>
     </message>
     <message>
         <source> Changing this setting will restart openpilot if the car is powered on.</source>
-        <translation type="unfinished"></translation>
+        <translation> Modifier ce paramètre redémarrera openpilot si le véhicule est allumé.</translation>
     </message>
     <message>
         <source>Record and Upload Microphone Audio</source>
-        <translation type="unfinished"></translation>
+        <translation>Enregistrer et téléverser l&apos;audio du microphone</translation>
     </message>
     <message>
         <source>Record and store microphone audio while driving. The audio will be included in the dashcam video in comma connect.</source>
-        <translation type="unfinished"></translation>
+        <translation>Enregistrer et stocker l&apos;audio du microphone pendant la conduite. L&apos;audio sera inclus dans la vidéo dashcam dans comma connect.</translation>
     </message>
     <message>
         <source>Enable sunnypilot</source>
-        <translation type="unfinished"></translation>
+        <translation>Activer sunnypilot</translation>
     </message>
     <message>
         <source>Use the sunnypilot system for adaptive cruise control and lane keep driver assistance. Your attention is required at all times to use this feature.</source>
-        <translation type="unfinished"></translation>
+        <translation>Utiliser le système sunnypilot pour le régulateur de vitesse adaptatif et l&apos;assistance au maintien de voie. Votre attention est requise en permanence pour utiliser cette fonctionnalité.</translation>
     </message>
     <message>
         <source>Enable Dynamic Experimental Control</source>
-        <translation type="unfinished"></translation>
+        <translation>Activer le contrôle expérimental dynamique</translation>
     </message>
     <message>
         <source>Enable toggle to allow the model to determine when to use sunnypilot ACC or sunnypilot End to End Longitudinal.</source>
-        <translation type="unfinished"></translation>
+        <translation>Activer cette option pour permettre au modèle de déterminer quand utiliser l&apos;ACC sunnypilot ou le contrôle longitudinal de bout en bout sunnypilot.</translation>
     </message>
     <message>
         <source>When enabled, pressing the accelerator pedal will disengage sunnypilot.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lorsque cette option est activée, appuyer sur la pédale d&apos;accélérateur désengagera sunnypilot.</translation>
     </message>
     <message>
         <source>Enable driver monitoring even when sunnypilot is not engaged.</source>
-        <translation type="unfinished"></translation>
+        <translation>Activer la surveillance du conducteur même lorsque sunnypilot n&apos;est pas engagé.</translation>
     </message>
     <message>
         <source>Standard is recommended. In aggressive mode, sunnypilot will follow lead cars closer and be more aggressive with the gas and brake. In relaxed mode sunnypilot will stay further away from lead cars. On supported cars, you can cycle through these personalities with your steering wheel distance button.</source>
-        <translation type="unfinished"></translation>
+        <translation>Standard est recommandé. En mode agressif, sunnypilot suivra les véhicules de plus près et sera plus réactif avec l&apos;accélérateur et le frein. En mode détendu, sunnypilot gardera une plus grande distance avec les véhicules. Sur les voitures compatibles, vous pouvez alterner entre ces personnalités avec le bouton de distance sur votre volant.</translation>
     </message>
     <message>
         <source>sunnypilot defaults to driving in &lt;b&gt;chill mode&lt;/b&gt;. Experimental mode enables &lt;b&gt;alpha-level features&lt;/b&gt; that aren&apos;t ready for chill mode. Experimental features are listed below:</source>
-        <translation type="unfinished"></translation>
+        <translation>sunnypilot conduit par défaut en &lt;b&gt;mode tranquille&lt;/b&gt;. Le mode expérimental active des &lt;b&gt;fonctionnalités alpha&lt;/b&gt; qui ne sont pas prêtes pour le mode tranquille. Les fonctionnalités expérimentales sont listées ci-dessous :</translation>
     </message>
     <message>
         <source>Let the driving model control the gas and brakes. sunnypilot will drive as it thinks a human would, including stopping for red lights and stop signs. Since the driving model decides the speed to drive, the set speed will only act as an upper bound. This is an alpha quality feature; mistakes should be expected.</source>
-        <translation type="unfinished"></translation>
+        <translation>Laisser le modèle de conduite contrôler l&apos;accélérateur et les freins. sunnypilot conduira comme il pense qu&apos;un humain le ferait, y compris s&apos;arrêter aux feux rouges et aux panneaux stop. Puisque le modèle de conduite décide de la vitesse, la vitesse définie servira uniquement de limite supérieure. C&apos;est une fonctionnalité de qualité alpha ; des erreurs sont à prévoir.</translation>
     </message>
     <message>
         <source>An alpha version of sunnypilot longitudinal control can be tested, along with Experimental mode, on non-release branches.</source>
-        <translation type="unfinished"></translation>
+        <translation>Une version alpha du contrôle longitudinal sunnypilot peut être testée, ainsi que le mode expérimental, sur les branches non-release.</translation>
     </message>
     <message>
         <source>Enable the sunnypilot longitudinal control (alpha) toggle to allow Experimental mode.</source>
-        <translation type="unfinished"></translation>
+        <translation>Activer l&apos;option de contrôle longitudinal sunnypilot (alpha) pour permettre le mode expérimental.</translation>
     </message>
 </context>
 <context>
@@ -2679,58 +2686,58 @@ Data</source>
     </message>
     <message>
         <source>Favorites</source>
-        <translation type="unfinished"></translation>
+        <translation>Favoris</translation>
     </message>
 </context>
 <context>
     <name>VisualsPanel</name>
     <message>
         <source>Show Blind Spot Warnings</source>
-        <translation type="unfinished"></translation>
+        <translation>Afficher les avertissements d&apos;angle mort</translation>
     </message>
     <message>
         <source>Enabling this will display warnings when a vehicle is detected in your blind spot as long as your car has BSM supported.</source>
-        <translation type="unfinished"></translation>
+        <translation>Activer cette option affichera des avertissements lorsqu&apos;un véhicule est détecté dans votre angle mort, à condition que votre voiture dispose du BSM.</translation>
     </message>
     <message>
         <source> Changing this setting will restart openpilot if the car is powered on.</source>
-        <translation type="unfinished"></translation>
+        <translation> Modifier ce paramètre redémarrera openpilot si le véhicule est allumé.</translation>
     </message>
     <message>
         <source>Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Désactivé</translation>
     </message>
     <message>
         <source>Distance</source>
-        <translation type="unfinished"></translation>
+        <translation>Distance</translation>
     </message>
     <message>
         <source>Speed</source>
-        <translation type="unfinished"></translation>
+        <translation>Vitesse</translation>
     </message>
     <message>
         <source>Time</source>
-        <translation type="unfinished"></translation>
+        <translation>Temps</translation>
     </message>
     <message>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation>Tout</translation>
     </message>
     <message>
         <source>Display Metrics Below Chevron</source>
-        <translation type="unfinished"></translation>
+        <translation>Afficher les métriques sous le chevron</translation>
     </message>
     <message>
         <source>Display useful metrics below the chevron that tracks the lead car (only applicable to cars with openpilot longitudinal control).</source>
-        <translation type="unfinished"></translation>
+        <translation>Afficher des métriques utiles sous le chevron qui suit le véhicule de tête (uniquement applicable aux voitures avec contrôle longitudinal openpilot).</translation>
     </message>
     <message>
         <source>Enable Tesla Rainbow Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Activer le mode arc-en-ciel Tesla</translation>
     </message>
     <message>
         <source>A beautiful rainbow effect on the path the model wants to take.</source>
-        <translation type="unfinished"></translation>
+        <translation>Un bel effet arc-en-ciel sur la trajectoire que le modèle veut suivre.</translation>
     </message>
     <message>
         <source>It</source>
