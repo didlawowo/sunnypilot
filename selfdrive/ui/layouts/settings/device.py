@@ -11,7 +11,7 @@ from openpilot.system.ui.lib.application import gui_app
 from openpilot.system.ui.widgets import Widget, DialogResult
 from openpilot.system.ui.widgets.confirm_dialog import confirm_dialog, alert_dialog
 from openpilot.system.ui.widgets.html_render import HtmlRenderer
-from openpilot.system.ui.widgets.list_view import text_item, button_item, dual_button_item
+from openpilot.system.ui.widgets.list_view import text_item, button_item, dual_button_item, toggle_item
 from openpilot.system.ui.widgets.option_dialog import MultiOptionDialog
 from openpilot.system.ui.widgets.scroller import Scroller
 
@@ -24,6 +24,10 @@ DESCRIPTIONS = {
       "up or 9° down. openpilot is continuously calibrating, resetting is rarely required."
   ),
   'review_guide': "Review the rules, features, and limitations of openpilot",
+  'parking_mode': (
+    "Enable intelligent dashcam when parked. Uses accelerometer to detect impacts "
+    "and preserves footage around detected shocks. Monitors battery voltage to prevent drain."
+  ),
 }
 
 
@@ -53,6 +57,9 @@ class DeviceLayout(Widget):
       regulatory_btn := button_item("Regulatory", "VIEW", callback=self._on_regulatory),
       button_item("Review Training Guide", "REVIEW", DESCRIPTIONS['review_guide'], self._on_review_training_guide),
       button_item("Change Language", "CHANGE", callback=self._show_language_selection, enabled=ui_state.is_offroad),
+      toggle_item("Parking Mode", DESCRIPTIONS['parking_mode'],
+                  initial_state=self._params.get_bool("ParkingModeEnabled"),
+                  callback=self._toggle_parking_mode, enabled=ui_state.is_offroad),
       dual_button_item("Reboot", "Power Off", left_callback=self._reboot_prompt, right_callback=self._power_off_prompt),
     ]
     regulatory_btn.set_visible(TICI)
@@ -148,3 +155,6 @@ class DeviceLayout(Widget):
     )
 
   def _on_review_training_guide(self): pass
+
+  def _toggle_parking_mode(self, enabled: bool):
+    self._params.put_bool("ParkingModeEnabled", enabled)

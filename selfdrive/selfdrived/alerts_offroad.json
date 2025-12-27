@@ -1,4 +1,9 @@
 {
+  "Offroad_ParkingShock": {
+    "text": "Parking Mode: Shock detected at %1. Footage has been preserved.",
+    "severity": 1,
+    "_comment": "Set extra field to the timestamp of the shock"
+  },
   "Offroad_TemperatureTooHigh": {
     "text": "Device temperature too high. System cooling down before starting. Current internal component temperature: %1",
     "severity": 0

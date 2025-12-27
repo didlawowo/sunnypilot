@@ -95,6 +95,10 @@ def is_stock_model(started, params, CP: car.CarParams) -> bool:
 def mapd_ready(started: bool, params: Params, CP: car.CarParams) -> bool:
   return bool(os.path.exists(Paths.mapd_root()))
 
+def parking_mode(started: bool, params: Params, CP: car.CarParams) -> bool:
+  """Run parking monitor when not started (parked) and parking mode is enabled."""
+  return not started and params.get_bool("ParkingModeEnabled")
+
 def uploader_ready(started: bool, params: Params, CP: car.CarParams) -> bool:
   if not params.get_bool("OnroadUploads"):
     return only_offroad(started, params, CP)
@@ -182,6 +186,9 @@ procs += [
 
   # locationd
   NativeProcess("locationd_llk", "sunnypilot/selfdrive/locationd", ["./locationd"], only_onroad),
+
+  # Parking mode
+  PythonProcess("parking_monitor", "sunnypilot.selfdrive.parking_monitor", parking_mode),
 ]
 
 if os.path.exists("./github_runner.sh"):

@@ -454,7 +454,22 @@ enum TurnDirection {
   turnRight @2;
 }
 
-struct CustomReserved10 @0xcb9fd56c7057593a {
+struct ParkingEvent @0xcb9fd56c7057593a {
+  state @0 :ParkingState;
+  shockDetected @1 :Bool;
+  shockIntensity @2 :Float32;
+  batteryVoltage @3 :Float32;
+  calibrationProgress @4 :Float32;
+  timestamp @5 :UInt64;
+
+  enum ParkingState {
+    disabled @0;
+    calibrating @1;
+    monitoring @2;
+    shockDetected @3;
+    lowBattery @4;
+    shutdownPending @5;
+  }
 }
 
 struct CustomReserved11 @0xc2243c65e0340384 {

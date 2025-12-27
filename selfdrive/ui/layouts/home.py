@@ -2,6 +2,9 @@ import time
 import pyray as rl
 from collections.abc import Callable
 from enum import IntEnum
+
+import cereal.messaging as messaging
+from cereal import custom
 from openpilot.common.params import Params
 from openpilot.selfdrive.ui.widgets.offroad_alerts import UpdateAlert, OffroadAlert
 from openpilot.selfdrive.ui.widgets.exp_mode_button import ExperimentalModeButton
@@ -19,6 +22,8 @@ RIGHT_COLUMN_WIDTH = 750
 REFRESH_INTERVAL = 10.0
 
 PRIME_BG_COLOR = rl.Color(51, 51, 51, 255)
+PARKING_CALIBRATING_COLOR = rl.Color(255, 180, 0, 255)  # Yellow/Orange
+PARKING_MONITORING_COLOR = rl.Color(0, 180, 0, 255)  # Green
 
 
 class HomeLayoutState(IntEnum):
@@ -42,6 +47,11 @@ class HomeLayout(Widget):
     self.update_available = False
     self.alert_count = 0
 
+    # Parking mode state
+    self.parking_mode_active = False
+    self.parking_state = custom.ParkingEvent.ParkingState.disabled
+    self.sm = messaging.SubMaster(['parkingEvent'])
+
     self.header_rect = rl.Rectangle(0, 0, 0, 0)
     self.content_rect = rl.Rectangle(0, 0, 0, 0)
     self.left_column_rect = rl.Rectangle(0, 0, 0, 0)
@@ -49,6 +59,7 @@ class HomeLayout(Widget):
 
     self.update_notif_rect = rl.Rectangle(0, 0, 200, HEADER_HEIGHT - 10)
     self.alert_notif_rect = rl.Rectangle(0, 0, 220, HEADER_HEIGHT - 10)
+    self.parking_notif_rect = rl.Rectangle(0, 0, 200, HEADER_HEIGHT - 10)
 
     self._prime_widget = PrimeWidget()
     self._setup_widget = SetupWidget()
@@ -71,6 +82,9 @@ class HomeLayout(Widget):
     if current_time - self.last_refresh >= REFRESH_INTERVAL:
       self._refresh()
       self.last_refresh = current_time
+
+    # Update parking mode state (more frequently than full refresh)
+    self._update_parking_state()
 
     self._handle_input()
     self._render_header()
@@ -109,6 +123,11 @@ class HomeLayout(Widget):
     notif_x = self.header_rect.x + (220 if self.update_available else 0)
     self.alert_notif_rect.x = notif_x
     self.alert_notif_rect.y = self.header_rect.y + (self.header_rect.height - 60) // 2
+
+    # Parking mode indicator position (after alerts)
+    parking_x = notif_x + (240 if self.alert_count > 0 else 0)
+    self.parking_notif_rect.x = parking_x
+    self.parking_notif_rect.y = self.header_rect.y + (self.header_rect.height - 60) // 2
 
   def _handle_input(self):
     if not rl.is_mouse_button_pressed(rl.MouseButton.MOUSE_BUTTON_LEFT):
@@ -156,6 +175,24 @@ class HomeLayout(Widget):
       text_x = self.alert_notif_rect.x + (self.alert_notif_rect.width - text_width) // 2
       text_y = self.alert_notif_rect.y + (self.alert_notif_rect.height - HEAD_BUTTON_FONT_SIZE) // 2
       rl.draw_text_ex(font, alert_text, rl.Vector2(int(text_x), int(text_y)), HEAD_BUTTON_FONT_SIZE, 0, rl.WHITE)
+
+    # Parking mode indicator
+    if self.parking_mode_active:
+      if self.parking_state == custom.ParkingEvent.ParkingState.calibrating:
+        parking_color = PARKING_CALIBRATING_COLOR
+        parking_text = "CALIBRATING"
+      elif self.parking_state == custom.ParkingEvent.ParkingState.shockDetected:
+        parking_color = rl.Color(226, 44, 44, 255)  # Red for shock
+        parking_text = "SHOCK!"
+      else:
+        parking_color = PARKING_MONITORING_COLOR
+        parking_text = "PARKING"
+
+      rl.draw_rectangle_rounded(self.parking_notif_rect, 0.3, 10, parking_color)
+      text_width = measure_text_cached(font, parking_text, HEAD_BUTTON_FONT_SIZE).x
+      text_x = self.parking_notif_rect.x + (self.parking_notif_rect.width - text_width) // 2
+      text_y = self.parking_notif_rect.y + (self.parking_notif_rect.height - HEAD_BUTTON_FONT_SIZE) // 2
+      rl.draw_text_ex(font, parking_text, rl.Vector2(int(text_x), int(text_y)), HEAD_BUTTON_FONT_SIZE, 0, rl.WHITE)
 
     # Version text (right aligned)
     version_text = self._get_version_text()
@@ -212,3 +249,10 @@ class HomeLayout(Widget):
     brand = "openpilot"
     description = self.params.get("UpdaterCurrentDescription")
     return f"{brand} {description}" if description else brand
+
+  def _update_parking_state(self):
+    self.sm.update(0)  # Non-blocking update
+    if self.sm.updated['parkingEvent']:
+      evt = self.sm['parkingEvent']
+      self.parking_state = evt.state
+      self.parking_mode_active = evt.state != custom.ParkingEvent.ParkingState.disabled
