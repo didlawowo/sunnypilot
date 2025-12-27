@@ -961,7 +961,7 @@ DEVANT</translation>
     </message>
     <message>
         <source>Speed Limit</source>
-        <translation type="unfinished"></translation>
+        <translation>Limite de vitesse</translation>
     </message>
 </context>
 <context>
@@ -980,31 +980,31 @@ DEVANT</translation>
     </message>
     <message>
         <source>Note: For vehicles without LFA/LKAS button, disabling this will prevent lateral control engagement.</source>
-        <translation type="unfinished"></translation>
+        <translation>Note : Pour les véhicules sans bouton LFA/LKAS, désactiver cette option empêchera l&apos;engagement du contrôle latéral.</translation>
     </message>
     <message>
         <source>Engage lateral and longitudinal control with cruise control engagement.</source>
-        <translation type="unfinished"></translation>
+        <translation>Engager le contrôle latéral et longitudinal avec l&apos;engagement du régulateur de vitesse.</translation>
     </message>
     <message>
         <source>Note: Once lateral control is engaged via UEM, it will remain engaged until it is manually disabled via the MADS button or car shut off.</source>
-        <translation type="unfinished"></translation>
+        <translation>Note : Une fois le contrôle latéral engagé via UEM, il restera engagé jusqu&apos;à ce qu&apos;il soit désactivé manuellement via le bouton MADS ou l&apos;arrêt du véhicule.</translation>
     </message>
     <message>
         <source>Start the vehicle to check vehicle compatibility.</source>
-        <translation type="unfinished"></translation>
+        <translation>Démarrez le véhicule pour vérifier la compatibilité.</translation>
     </message>
     <message>
         <source>This feature defaults to OFF, and does not allow selection due to vehicle limitations.</source>
-        <translation type="unfinished"></translation>
+        <translation>Cette fonctionnalité est désactivée par défaut et ne permet pas de sélection en raison des limitations du véhicule.</translation>
     </message>
     <message>
         <source>This feature defaults to ON, and does not allow selection due to vehicle limitations.</source>
-        <translation type="unfinished"></translation>
+        <translation>Cette fonctionnalité est activée par défaut et ne permet pas de sélection en raison des limitations du véhicule.</translation>
     </message>
     <message>
         <source>This platform only supports Disengage mode due to vehicle limitations.</source>
-        <translation type="unfinished"></translation>
+        <translation>Cette plateforme ne prend en charge que le mode Désengagement en raison des limitations du véhicule.</translation>
     </message>
     <message>
         <source>Remain Active</source>
