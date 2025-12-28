@@ -1,0 +1,239 @@
+version: '3'
+
+vars:
+  COMMA_IP: '{{.COMMA_IP | default "comma.local"}}'
+  COMMA_USER: '{{.COMMA_USER | default "comma"}}'
+  BRANCH: '{{.BRANCH | default ""}}'
+
+tasks:
+  # =============================================================================
+  # Development
+  # =============================================================================
+
+  setup:
+    desc: Install development dependencies
+    cmds:
+      - pip install -r requirements.txt
+      - pip install -r requirements_dev.txt
+
+  lint:
+    desc: Run linters (ruff, mypy)
+    cmds:
+      - ruff check .
+      - mypy selfdrive/
+
+  lint:fix:
+    desc: Auto-fix linting issues
+    cmds:
+      - ruff check --fix .
+
+  format:
+    desc: Format code with ruff
+    cmds:
+      - ruff format .
+
+  test:
+    desc: Run all tests
+    cmds:
+      - pytest tests/ -v
+
+  test:parking:
+    desc: Run parking monitor tests
+    cmds:
+      - python -m sunnypilot.selfdrive.tests.test_parking_monitor
+
+  # =============================================================================
+  # Build
+  # =============================================================================
+
+  build:capnp:
+    desc: Compile Cap'n Proto schemas
+    cmds:
+      - cd cereal && capnp compile -oc++ custom.capnp
+      - cd cereal && capnp compile -opython custom.capnp
+
+  build:ui:
+    desc: Build UI assets
+    cmds:
+      - scons -j$(nproc) selfdrive/ui/
+
+  build:all:
+    desc: Full build
+    cmds:
+      - scons -j$(nproc)
+
+  clean:
+    desc: Clean build artifacts
+    cmds:
+      - scons -c
+      - find . -type d -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true
+      - find . -type f -name "*.pyc" -delete 2>/dev/null || true
+
+  # =============================================================================
+  # Comma Device Deployment
+  # =============================================================================
+
+  deploy:
+    desc: Deploy current branch to comma device
+    cmds:
+      - |
+        echo "Deploying to {{.COMMA_USER}}@{{.COMMA_IP}}..."
+        ssh {{.COMMA_USER}}@{{.COMMA_IP}} "cd /data/openpilot && git fetch origin && git checkout {{.BRANCH}} && git pull"
+    vars:
+      BRANCH:
+        sh: git branch --show-current
+
+  deploy:restart:
+    desc: Deploy and restart services on comma
+    cmds:
+      - task: deploy
+      - task: comma:restart
+
+  ssh:
+    desc: SSH into comma device
+    cmds:
+      - ssh {{.COMMA_USER}}@{{.COMMA_IP}}
+
+  comma:restart:
+    desc: Restart openpilot on comma device
+    cmds:
+      - ssh {{.COMMA_USER}}@{{.COMMA_IP}} "sudo systemctl restart comma"
+
+  comma:stop:
+    desc: Stop openpilot on comma device
+    cmds:
+      - ssh {{.COMMA_USER}}@{{.COMMA_IP}} "sudo systemctl stop comma"
+
+  comma:logs:
+    desc: Stream logs from comma device
+    cmds:
+      - ssh {{.COMMA_USER}}@{{.COMMA_IP}} "tail -f /data/log/swapcached"
+
+  comma:tmux:
+    desc: Attach to tmux session on comma
+    cmds:
+      - ssh -t {{.COMMA_USER}}@{{.COMMA_IP}} "tmux attach || tmux"
+
+  comma:status:
+    desc: Check process status on comma
+    cmds:
+      - ssh {{.COMMA_USER}}@{{.COMMA_IP}} "cat /data/params/d/ParkingModeEnabled 2>/dev/null || echo 'Not set'"
+      - ssh {{.COMMA_USER}}@{{.COMMA_IP}} "cat /data/params/d/ParkingModeActive 2>/dev/null || echo 'Not set'"
+      - ssh {{.COMMA_USER}}@{{.COMMA_IP}} "ps aux | grep -E 'parking_monitor|manager' | grep -v grep"
+
+  # =============================================================================
+  # Parking Mode Testing
+  # =============================================================================
+
+  parking:test:
+    desc: Run parking monitor test on comma
+    cmds:
+      - ssh {{.COMMA_USER}}@{{.COMMA_IP}} "cd /data/openpilot && python -m sunnypilot.selfdrive.tests.test_parking_monitor"
+
+  parking:enable:
+    desc: Enable parking mode on comma
+    cmds:
+      - ssh {{.COMMA_USER}}@{{.COMMA_IP}} "echo -n '1' > /data/params/d/ParkingModeEnabled"
+      - echo "Parking mode enabled"
+
+  parking:disable:
+    desc: Disable parking mode on comma
+    cmds:
+      - ssh {{.COMMA_USER}}@{{.COMMA_IP}} "echo -n '0' > /data/params/d/ParkingModeEnabled"
+      - echo "Parking mode disabled"
+
+  parking:status:
+    desc: Check parking mode status
+    cmds:
+      - |
+        echo "=== Parking Mode Status ==="
+        echo -n "Enabled: "
+        ssh {{.COMMA_USER}}@{{.COMMA_IP}} "cat /data/params/d/ParkingModeEnabled 2>/dev/null || echo '0'"
+        echo -n "Active: "
+        ssh {{.COMMA_USER}}@{{.COMMA_IP}} "cat /data/params/d/ParkingModeActive 2>/dev/null || echo '0'"
+        echo -n "Last Shock: "
+        ssh {{.COMMA_USER}}@{{.COMMA_IP}} "cat /data/params/d/ParkingModeLastShock 2>/dev/null || echo 'None'"
+        echo -n "Shock Alert: "
+        ssh {{.COMMA_USER}}@{{.COMMA_IP}} "cat /data/params/d/Offroad_ParkingShock 2>/dev/null || echo 'None'"
+
+  parking:logs:
+    desc: Stream parking monitor logs
+    cmds:
+      - ssh {{.COMMA_USER}}@{{.COMMA_IP}} "journalctl -f -u comma | grep -i parking"
+
+  # =============================================================================
+  # Git Workflow
+  # =============================================================================
+
+  git:status:
+    desc: Show git status
+    cmds:
+      - git status
+      - git branch -v
+
+  git:sync:
+    desc: Sync with upstream (fetch + rebase)
+    cmds:
+      - git fetch origin
+      - git rebase origin/master
+
+  git:pr:
+    desc: Create pull request (requires gh CLI)
+    cmds:
+      - gh pr create --fill
+
+  # =============================================================================
+  # Simulation
+  # =============================================================================
+
+  sim:launch:
+    desc: Launch openpilot simulation with CARLA
+    dir: tools/sim
+    cmds:
+      - ./launch_openpilot.sh
+
+  sim:replay:
+    desc: Replay a drive (usage - task sim:replay -- <route_id>)
+    cmds:
+      - tools/replay/replay {{.CLI_ARGS}}
+
+  # =============================================================================
+  # Translations
+  # =============================================================================
+
+  i18n:update:
+    desc: Update translation files
+    cmds:
+      - python selfdrive/ui/update_translations.py
+
+  i18n:compile:
+    desc: Compile translation files
+    cmds:
+      - lrelease selfdrive/ui/translations/*.ts
+
+  # =============================================================================
+  # Utilities
+  # =============================================================================
+
+  params:list:
+    desc: List all params on comma
+    cmds:
+      - ssh {{.COMMA_USER}}@{{.COMMA_IP}} "ls -la /data/params/d/"
+
+  params:get:
+    desc: Get a param value (usage - task params:get -- ParamName)
+    cmds:
+      - ssh {{.COMMA_USER}}@{{.COMMA_IP}} "cat /data/params/d/{{.CLI_ARGS}}"
+
+  params:set:
+    desc: Set a param value (usage - task params:set -- ParamName value)
+    cmds:
+      - |
+        PARAM=$(echo "{{.CLI_ARGS}}" | awk '{print $1}')
+        VALUE=$(echo "{{.CLI_ARGS}}" | awk '{print $2}')
+        ssh {{.COMMA_USER}}@{{.COMMA_IP}} "echo -n '$VALUE' > /data/params/d/$PARAM"
+
+  watch:
+    desc: Watch for file changes and run tests
+    cmds:
+      - watchexec -e py -r -- pytest tests/ -v --tb=short
