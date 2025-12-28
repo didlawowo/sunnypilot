@@ -153,6 +153,10 @@ class SelfdriveD(CruiseHelper):
     elif self.CP.secOcRequired and not self.CP.secOcKeyAvailable:
       self.startup_event = EventName.startupNoSecOcKey
 
+    # Disable startup alert if user preference (except dashcam modes)
+    if self.params.get_bool("DisableStartupAlert") and self.startup_event in (EventName.startup, EventName.startupMaster):
+      self.startup_event = None
+
     if not car_recognized:
       self.events.add(EventName.carUnrecognized, static=True)
       set_offroad_alert("Offroad_CarUnrecognized", True)

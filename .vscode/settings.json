@@ -23,5 +23,7 @@
     "system/**",
     "third_party/**",
     "tools/**",
-  ]
+  ],
+  "workbench.preferredDarkColorTheme": "Abyss",
+  "workbench.colorTheme": "Aura Dark"
 }

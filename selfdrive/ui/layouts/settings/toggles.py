@@ -23,6 +23,7 @@ DESCRIPTIONS = {
   'RecordFront': "Upload data from the driver facing camera and help improve the driver monitoring algorithm.",
   "IsMetric": "Display speed in km/h instead of mph.",
   "RecordAudio": "Record and store microphone audio while driving. The audio will be included in the dashcam video in comma connect.",
+  "DisableStartupAlert": "Disable the \"Be ready to take over\" warning message shown when openpilot starts. Dashcam mode warnings will still be shown.",
 }
 
 
@@ -84,6 +85,12 @@ class TogglesLayout(Widget):
       toggle_item(
         "Use Metric System", DESCRIPTIONS["IsMetric"], self._params.get_bool("IsMetric"), icon="metric.png"
       ),
+      toggle_item(
+        "Disable Startup Alert",
+        DESCRIPTIONS["DisableStartupAlert"],
+        self._params.get_bool("DisableStartupAlert"),
+        callback=self._toggle_startup_alert,
+      ),
     ]
 
     self._scroller = Scroller(items, line_separator=True, spacing=0)
@@ -93,3 +100,6 @@ class TogglesLayout(Widget):
 
   def _set_longitudinal_personality(self, button_index: int):
     self._params.put("LongitudinalPersonality", button_index)
+
+  def _toggle_startup_alert(self, enabled: bool):
+    self._params.put_bool("DisableStartupAlert", enabled)
