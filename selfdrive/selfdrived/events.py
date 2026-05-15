@@ -5,7 +5,7 @@ import os
 from cereal import log, car
 import cereal.messaging as messaging
 from openpilot.common.constants import CV
-from openpilot.common.git import get_short_branch
+from openpilot.common.git import get_commit, get_short_branch
 from openpilot.common.realtime import DT_CTRL
 from openpilot.selfdrive.locationd.calibrationd import MIN_SPEED_FILTER
 from openpilot.system.micd import SAMPLE_RATE, SAMPLE_BUFFER
@@ -73,7 +73,8 @@ def startup_master_alert(CP: car.CarParams, CS: car.CarState, sm: messaging.SubM
   if "REPLAY" in os.environ:
     branch = "replay"
 
-  return StartupAlert("WARNING: This branch is not tested", branch, alert_status=AlertStatus.userPrompt)
+  # Startup branch warning disabled — chris/custom validée localement
+  return StartupAlert(f"sunnypilot custom • {get_commit()[:8]}", branch)
 
 def below_engage_speed_alert(CP: car.CarParams, CS: car.CarState, sm: messaging.SubMaster, metric: bool, soft_disable_time: int, personality) -> Alert:
   return NoEntryAlert(f"Drive above {get_display_speed(CP.minEnableSpeed, metric)} to engage")

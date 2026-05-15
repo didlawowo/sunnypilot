@@ -194,6 +194,13 @@ class Car:
     can_strs = messaging.drain_sock_raw(self.can_sock, wait_for_one=True)
     can_list = can_capnp_to_list(can_strs)
 
+    # GSR2 CAN recv tap — alimente la vue CAN Live (CANviz) de la PWA
+    try:
+      from openpilot.selfdrive.car.gsr2_can_recv_writer import write_recv_frames
+      write_recv_frames(can_list)
+    except Exception:
+      pass
+
     # Update carState from CAN
     CS, CS_SP = self.CI.update(can_list)
     CS_SP = convert_to_capnp(CS_SP)
@@ -280,6 +287,13 @@ class Car:
       # send car controls over can
       now_nanos = self.can_log_mono_time if REPLAY else int(time.monotonic() * 1e9)
       self.last_actuators_output, can_sends = self.CI.apply(CC, convert_carControlSP(CC_SP), now_nanos)
+
+      # GSR2 injection — ajoute les trames du daemon ioniq-control
+      try:
+        from openpilot.selfdrive.car.gsr2_inject_reader import read_inject_frames
+        can_sends.extend(read_inject_frames())
+      except Exception:
+        pass
       self.pm.send('sendcan', can_list_to_can_capnp(can_sends, msgtype='sendcan', valid=CS.canValid))
 
       self.CC_prev = CC
