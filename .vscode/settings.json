@@ -17,11 +17,32 @@
     "**/.git",
     "**/.venv",
     "**/__pycache__",
-    // exclude directories that should be using the symlinked version
     "common/**",
     "selfdrive/**",
     "system/**",
     "third_party/**",
-    "tools/**",
-  ]
+    "tools/**"
+  ],
+  "workbench.colorTheme": "GitHub Dark High Contrast",
+  "peacock.color": "#3b4949",
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#516565",
+    "activityBar.background": "#516565",
+    "activityBar.foreground": "#e7e7e7",
+    "activityBar.inactiveForeground": "#e7e7e799",
+    "activityBarBadge.background": "#242c2c",
+    "activityBarBadge.foreground": "#e7e7e7",
+    "commandCenter.border": "#e7e7e799",
+    "sash.hoverBorder": "#516565",
+    "statusBar.background": "#3b4949",
+    "statusBar.foreground": "#e7e7e7",
+    "statusBarItem.hoverBackground": "#242c2c",
+    "statusBarItem.remoteBackground": "#3b4949",
+    "statusBarItem.remoteForeground": "#e7e7e7",
+    "titleBar.activeBackground": "#3b4949",
+    "titleBar.activeForeground": "#e7e7e7",
+    "titleBar.inactiveBackground": "#3b494999",
+    "titleBar.inactiveForeground": "#e7e7e799"
+  },
+  "window.title": "⚪ external · sunnypilot ${separator}${activeEditorShort}"
 }
