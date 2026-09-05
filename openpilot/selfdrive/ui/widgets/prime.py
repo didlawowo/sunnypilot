@@ -17,8 +17,9 @@ class PrimeWidget(Widget):
   def _render(self, rect):
     if ui_state.prime_state.is_prime():
       self._render_for_prime_user(rect)
-    else:
-      self._render_for_non_prime_users(rect)
+    # Publicité comma prime masquée — la branche non-abonné ne rend rien.
+    # _render_for_non_prime_users() est conservée en l'état pour que le patch
+    # reste réversible sans toucher au reste du fichier.
 
   def _render_for_non_prime_users(self, rect: rl.Rectangle):
     """Renders the advertisement for non-Prime users."""

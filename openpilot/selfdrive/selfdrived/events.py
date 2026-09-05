@@ -6,7 +6,28 @@ from openpilot.cereal import log
 from opendbc.car.structs import car
 import openpilot.cereal.messaging as messaging
 from openpilot.common.constants import CV
-from openpilot.common.git import get_short_branch
+from openpilot.common.git import get_commit, get_short_branch
+
+_IONIQ_PYPROJECT = "/data/ioniq-control/pyproject.toml"
+_IONIQ_VERSION_CACHE = None
+
+
+def _ioniq_control_version():
+  """Version d'ioniq-control déployée, lue une fois puis mise en cache.
+
+  Ne lève jamais : ce module tourne dans selfdrived, un crash ici ferait tomber
+  openpilot. Fichier absent, TOML invalide ou clé manquante → « ? ».
+  """
+  global _IONIQ_VERSION_CACHE
+  if _IONIQ_VERSION_CACHE is None:
+    try:
+      import tomllib
+      with open(_IONIQ_PYPROJECT, "rb") as f:
+        _IONIQ_VERSION_CACHE = str(tomllib.load(f)["project"]["version"])
+    except Exception:
+      _IONIQ_VERSION_CACHE = "?"
+  return _IONIQ_VERSION_CACHE
+
 from openpilot.common.realtime import DT_CTRL
 from openpilot.selfdrive.locationd.calibrationd import MIN_SPEED_FILTER
 from openpilot.common.hardware import HARDWARE
@@ -72,7 +93,8 @@ def startup_master_alert(CP: car.CarParams, CS: car.CarState, sm: messaging.SubM
   if "REPLAY" in os.environ:
     branch = "replay"
 
-  return StartupAlert("WARNING: This branch is not tested", branch, alert_status=AlertStatus.userPrompt)
+  # Startup branch warning disabled — chris/custom validée localement
+  return StartupAlert(f"IONIQ Control v{_ioniq_control_version()}", f"sunnypilot {get_commit()[:8]}")
 
 def below_engage_speed_alert(CP: car.CarParams, CS: car.CarState, sm: messaging.SubMaster, metric: bool, soft_disable_time: int, personality) -> Alert:
   return NoEntryAlert(f"Drive above {get_display_speed(CP.minEnableSpeed, metric)} to engage")
@@ -778,12 +800,12 @@ EVENTS: dict[int, dict[str, Alert | AlertCallbackType]] = {
 
   EventName.reverseGear: {
     ET.PERMANENT: Alert(
-      "Reverse\nGear",
+      "Marche\narrière",
       "",
       AlertStatus.normal, AlertSize.full,
       Priority.LOWEST, VisualAlert.none, AudibleAlert.none, .2, creation_delay=0.5),
-    ET.USER_DISABLE: ImmediateDisableAlert("Reverse Gear"),
-    ET.NO_ENTRY: NoEntryAlert("Reverse Gear"),
+    ET.USER_DISABLE: ImmediateDisableAlert("Marche arrière"),
+    ET.NO_ENTRY: NoEntryAlert("Marche arrière"),
   },
 
   # On cars that use stock ACC the car can decide to cancel ACC for various reasons.

@@ -309,76 +309,9 @@ class DriverMonitoring:
 
   def _update_events(self, driver_engaged, op_engaged, lowspeed, wrong_gear):
     self.alert_level = AlertLevel.none
-    self.driver_interacting = driver_engaged
-
-    if self.alert_3_cnt >= self.settings._MAX_ALERT_3 or self.no_response_cnt >= self.settings._MAX_NO_RESPONSE:
-      if not self.lockout_active:
-        self.lockout_count += 1
-        self.lockout_duration = self.settings._LOCKOUT_TIMES[min(self.lockout_count - 1, len(self.settings._LOCKOUT_TIMES) - 1)]
-        Params().put("DriverLockoutCount", self.lockout_count)
-      self.lockout_active = True
-
-    if self.lockout_active:
-      self.lockout_time_elapsed += 1
-      if self.lockout_time_elapsed > self.lockout_duration:
-        self.lockout_active = False
-        self.alert_3_cnt = 0
-        self.cnt_since_alert_3 = 0
-        self.no_response_cnt = 0
-        self.lockout_time_elapsed = 0
-
-    always_on_valid = self.always_on and not wrong_gear
-    if (self.driver_interacting and self.awareness > 0 and self.active_policy == MonitoringPolicy.wheeltouch) or \
-       (not always_on_valid and not op_engaged) or \
-       (always_on_valid and not op_engaged and self.awareness <= 0):
-      # always reset on disengage with normal mode; disengage resets only on red if always on
-      self._reset_awareness()
-      return
-
-    awareness_prev = self.awareness
-    _reaching_alert_1 = self.awareness - self.step_change <= self.threshold_alert_1
-    _reaching_alert_3 = self.awareness - self.step_change <= 0
-    lowspeed_exemption = lowspeed and _reaching_alert_1
-    always_on_exemption = always_on_valid and not op_engaged and _reaching_alert_3
-
-    if self.awareness > 0 and \
-       ((self.driver_distraction_filter.x < 0.37 and self.face_detected and self.pose.low_std) or lowspeed_exemption):
-      if self.driver_interacting:
-        self._reset_awareness()
-        return
-      # only restore awareness when paying attention and alert is not red
-      self.awareness = min(self.awareness + ((self.settings._TIMEOUT_RECOVERY_FACTOR_MAX-self.settings._TIMEOUT_RECOVERY_FACTOR_MIN)*
-                                             (1.-self.awareness)+self.settings._TIMEOUT_RECOVERY_FACTOR_MIN)*self.step_change, 1.)
-      if self.awareness == 1.:
-        self.last_wheeltouch_awareness = min(self.last_wheeltouch_awareness + self.step_change, 1.)
-      # don't display alert banner when awareness is recovering and has cleared orange
-      if self.awareness > self.threshold_alert_2:
-        return
-
-    certainly_distracted = self.driver_distraction_filter.x > 0.63 and self.driver_distracted and self.face_detected
-    maybe_distracted = self.is_model_uncertain or not self.face_detected
-
-    if certainly_distracted or maybe_distracted:
-      # should always be counting if distracted unless at low speed and reaching green
-      # also will not be reaching 0 if DM is active when not engaged
-      if not (lowspeed_exemption or always_on_exemption):
-        self.awareness = max(self.awareness - self.step_change, -0.1)
-
-    if self.awareness <= 0.:
-      # terminal alert: disengagement required
-      self.alert_level = AlertLevel.three
-      if awareness_prev > 0.:
-        self.alert_3_cnt += 1
-        self.cnt_since_alert_3 = 0
-      else:
-        self.cnt_since_alert_3 += 1
-      if self.cnt_since_alert_3 == self.no_response_timeout:
-        self.no_response_cnt += 1
-    else:
-      if self.awareness <= self.threshold_alert_2:
-        self.alert_level = AlertLevel.two
-      elif self.awareness <= self.threshold_alert_1:
-        self.alert_level = AlertLevel.one
+    # Driver monitoring distraction alerts disabled by fork maintainer
+    self._reset_awareness()
+    return
 
   def get_state_packet(self, valid=True):
     # build driverMonitoringState packet

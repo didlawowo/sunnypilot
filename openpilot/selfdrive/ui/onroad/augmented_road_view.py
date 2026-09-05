@@ -8,6 +8,8 @@ from openpilot.selfdrive.ui.onroad.alert_renderer import AlertRenderer
 from openpilot.selfdrive.ui.onroad.driver_state import DriverStateRenderer
 from openpilot.selfdrive.ui.onroad.hud_renderer import HudRenderer
 from openpilot.selfdrive.ui.onroad.model_renderer import ModelRenderer
+from openpilot.selfdrive.ui.onroad.gsr2_suggestion_banner import SuggestionBannerRenderer
+from openpilot.selfdrive.ui.onroad.gsr2_capture_button import CaptureButtonRenderer
 from openpilot.selfdrive.ui.onroad.cameraview import CameraView
 from openpilot.system.ui.lib.application import gui_app
 from openpilot.common.transformations.camera import DEVICE_CAMERAS, DeviceCameraConfig, view_frame_from_device_frame
@@ -56,6 +58,8 @@ class AugmentedRoadView(CameraView, AugmentedRoadViewSP):
     self._hud_renderer = HudRenderer()
     self.alert_renderer = AlertRenderer()
     self.driver_state_renderer = DriverStateRenderer()
+    self._gsr2_suggestion_banner = SuggestionBannerRenderer()
+    self._gsr2_capture_button = CaptureButtonRenderer()
 
   def _render(self, rect):
     # Only render when system is started to avoid invalid data access
@@ -94,6 +98,10 @@ class AugmentedRoadView(CameraView, AugmentedRoadViewSP):
     self.alert_renderer.render(self._content_rect)
     self.driver_state_renderer.render(self._content_rect)
 
+    self._gsr2_capture_button.render(self._content_rect)
+
+    self._gsr2_suggestion_banner.render(self._content_rect)
+
     # Custom UI extension point - add custom overlays here
     # Use self._content_rect for positioning within camera bounds
 
@@ -103,7 +111,9 @@ class AugmentedRoadView(CameraView, AugmentedRoadViewSP):
     # Draw colored border based on driving state
     self._draw_border(rect)
 
-  def _handle_mouse_press(self, _):
+  def _handle_mouse_press(self, pos):
+    if self._gsr2_capture_button.handle_click(pos):
+      return
     if not self._hud_renderer.user_interacting() and self._click_callback is not None:
       self._click_callback()
 
