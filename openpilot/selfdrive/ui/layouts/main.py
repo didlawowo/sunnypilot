@@ -9,6 +9,7 @@ from openpilot.selfdrive.ui.layouts.settings.settings import SettingsLayout, Pan
 from openpilot.selfdrive.ui.onroad.augmented_road_view import AugmentedRoadView
 from openpilot.selfdrive.ui.ui_state import device, ui_state
 from openpilot.selfdrive.ui.layouts.onboarding import OnboardingWindow
+from openpilot.selfdrive.ui.gsr2_ui_requests import Gsr2UiRequests
 from openpilot.selfdrive.ui.body.layouts.onroad import BodyLayout
 
 if gui_app.sunnypilot_ui():
@@ -47,6 +48,17 @@ class MainLayout(Widget):
     # Set callbacks
     self._setup_callbacks()
 
+    # ioniq-control (#187) : demandes du bouton ☆ (écran, panneau)
+    self._gsr2_ui = Gsr2UiRequests(
+      open_panel=lambda: self.open_settings(getattr(PanelType, "IONIQ_CONTROL", PanelType.DEVICE)),
+      close_panel=self._set_mode_for_state,
+      panel_open=lambda: self._current_mode == MainState.SETTINGS,
+      set_dark=lambda on: setattr(ui_state, "gsr2_screen_dark", bool(on)),
+      is_dark=lambda: bool(getattr(ui_state, "gsr2_screen_dark", False)),
+      touched=lambda: any(ev.left_down for ev in gui_app.mouse_events),
+      ignition=lambda: bool(ui_state.ignition),
+    )
+
     gui_app.push_widget(self)
 
     # Start onboarding if terms or training not completed, make sure to push after self
@@ -56,6 +68,7 @@ class MainLayout(Widget):
 
   def _render(self, _):
     self._handle_onroad_transition()
+    self._gsr2_ui.poll()
     self._render_main_content()
 
   def _setup_callbacks(self):

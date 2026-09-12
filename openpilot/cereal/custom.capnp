@@ -354,6 +354,8 @@ struct OnroadEventSP @0xda96579883444c35 {
     e2eChime @23;
     laneChangeRoadEdge @24;
     bigModelReady @25;
+    # Suggestion de dépassement du daemon ioniq-control (patch 11)
+    overtakeSuggestion @26;
   }
 }
 

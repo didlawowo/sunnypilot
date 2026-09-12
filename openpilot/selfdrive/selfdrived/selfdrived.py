@@ -45,6 +45,8 @@ State = log.SelfdriveState.OpenpilotState
 PandaType = log.PandaState.PandaType
 LaneChangeState = log.LaneChangeState
 LaneChangeDirection = log.LaneChangeDirection
+from openpilot.selfdrive.selfdrived.gsr2_suggestion_chime import SuggestionChime
+
 EventName = log.OnroadEvent.EventName
 ButtonType = car.CarState.ButtonEvent.Type
 SafetyModel = car.CarParams.SafetyModel
@@ -93,12 +95,12 @@ class SelfdriveD(CruiseHelper):
     self.gps_location_service = get_gps_location_service(self.params)
     self.gps_packets = [self.gps_location_service]
     self.sensor_packets = ["accelerometer", "gyroscope"]
-    self.camera_packets = ["narrowRoadCameraState", "cabinCameraState", "wideRoadCameraState"]
+    self.camera_packets = ["narrowRoadCameraState", "wideRoadCameraState"]
 
     # TODO: de-couple selfdrived with card/conflate on carState without introducing controls mismatches
     self.car_state_sock = messaging.sub_sock('carState', timeout=20)
 
-    ignore = self.sensor_packets + self.gps_packets + ['alertDebug', 'lateralManeuverPlan'] + ['modelDataV2SP', 'longitudinalPlanSP']
+    ignore = self.sensor_packets + self.gps_packets + ['alertDebug', 'lateralManeuverPlan'] + ['modelDataV2SP', 'longitudinalPlanSP'] + ['driverMonitoringState']
     if SIMULATION:
       ignore += ['cabinCameraState', 'managerState']
     if REPLAY:
@@ -175,6 +177,7 @@ class SelfdriveD(CruiseHelper):
       self.events.add(EventName.dashcamMode, static=True)
 
     self.events_sp = EventsSP()
+    self._gsr2_chime = SuggestionChime()
     self.events_sp_prev = []
 
     self.mads = ModularAssistiveDrivingSystem(self)
@@ -524,6 +527,11 @@ class SelfdriveD(CruiseHelper):
         self.experimental_mode_switched = False
 
     self.icbm.run(CS, self.sm['carControl'], self.sm['longitudinalPlanSP'], self.is_metric)
+
+    # Carillon des suggestions ioniq-control (patch 11). `should_chime`
+    # ne lève jamais : une exception ici désengagerait la conduite.
+    if self._gsr2_chime.should_chime():
+      self.events_sp.add(custom.OnroadEventSP.EventName.overtakeSuggestion)
 
   def data_sample(self):
     _car_state = messaging.recv_one(self.car_state_sock)

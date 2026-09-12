@@ -245,6 +245,20 @@ EVENTS_SP: dict[int, dict[str, Alert | AlertCallbackType]] = {
       Priority.MID, VisualAlert.none, AudibleAlert.prompt, 3.),
   },
 
+  # Carillon des suggestions de dépassement (ioniq-control, patch 11).
+  # Texte vide + AlertSize.none : un son, aucune bannière — le bandeau de la
+  # vue de conduite (patch 10) porte déjà le visuel.
+  # Priority.LOWEST : AlertManager retient l'alerte de plus haute priorité, et
+  # à priorité égale la dernière arrivée. LOWEST est le seul palier qui ne
+  # puisse jamais passer devant une alerte de sécurité.
+  EventNameSP.overtakeSuggestion: {
+    ET.PERMANENT: Alert(
+      "",
+      "",
+      AlertStatus.normal, AlertSize.none,
+      Priority.LOWEST, VisualAlert.none, AudibleAlertSP.promptSingleLow, 1.5),
+  },
+
   EventNameSP.laneChangeRoadEdge: {
     ET.WARNING: Alert(
       "Lane Change Unavailable: Road Edge",

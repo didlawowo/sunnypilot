@@ -6,6 +6,7 @@ from openpilot.selfdrive.ui.layouts.settings.developer import DeveloperLayout
 from openpilot.selfdrive.ui.layouts.settings.device import DeviceLayout
 from openpilot.selfdrive.ui.layouts.settings.firehose import FirehoseLayout
 from openpilot.selfdrive.ui.layouts.settings.software import SoftwareLayout
+from openpilot.selfdrive.ui.layouts.settings.ioniq_control import IoniqControlLayout
 from openpilot.selfdrive.ui.layouts.settings.toggles import TogglesLayout
 from openpilot.system.ui.lib.application import gui_app, FontWeight, MousePos
 from openpilot.system.ui.lib.multilang import tr, tr_noop
@@ -37,6 +38,7 @@ class PanelType(IntEnum):
   SOFTWARE = 3
   FIREHOSE = 4
   DEVELOPER = 5
+  IONIQ_CONTROL = 6
 
 
 @dataclass
@@ -62,6 +64,7 @@ class SettingsLayout(Widget):
       PanelType.SOFTWARE: PanelInfo(tr_noop("Software"), SoftwareLayout()),
       PanelType.FIREHOSE: PanelInfo(tr_noop("Firehose"), FirehoseLayout()),
       PanelType.DEVELOPER: PanelInfo(tr_noop("Developer"), DeveloperLayout()),
+      PanelType.IONIQ_CONTROL: PanelInfo(tr_noop("IONIQ Control"), IoniqControlLayout()),
     }
 
     self._font_medium = gui_app.font(FontWeight.MEDIUM)
