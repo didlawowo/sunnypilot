@@ -272,6 +272,9 @@ class DeviceSP:
 
   @staticmethod
   def set_onroad_brightness(_ui_state, awake: bool, cur_brightness: float) -> float:
+    # ioniq-control (#187) : écran noir demandé par le bouton ☆, jusqu'au prochain toucher
+    if getattr(_ui_state, "gsr2_screen_dark", False):
+      return 0.0
     if not awake or not _ui_state.started:
       return cur_brightness
 

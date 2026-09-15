@@ -6,6 +6,7 @@ from openpilot.selfdrive.ui.mici.layouts.offroad_alerts import MiciOffroadAlerts
 from openpilot.selfdrive.ui.mici.onroad.augmented_road_view import AugmentedRoadView
 from openpilot.selfdrive.ui.ui_state import device, ui_state
 from openpilot.selfdrive.ui.mici.layouts.onboarding import OnboardingWindow
+from openpilot.selfdrive.ui.gsr2_ui_requests import Gsr2UiRequests
 from openpilot.selfdrive.ui.body.layouts.onroad import BodyLayout
 from openpilot.system.ui.widgets import Widget
 from openpilot.system.ui.widgets.scroller import Scroller
@@ -56,6 +57,17 @@ class MiciMainLayout(Scroller):
     # Set callbacks
     self._setup_callbacks()
 
+    # ioniq-control (#187) : mêmes demandes ☆ sur la variante mici.
+    self._gsr2_ui = Gsr2UiRequests(
+      open_panel=lambda: gui_app.push_widget(self._settings_layout),
+      close_panel=lambda: gui_app.pop_widgets_to(self, instant=True),
+      panel_open=lambda: gui_app.widget_in_stack(self._settings_layout),
+      set_dark=lambda on: setattr(ui_state, "gsr2_screen_dark", bool(on)),
+      is_dark=lambda: bool(getattr(ui_state, "gsr2_screen_dark", False)),
+      touched=lambda: any(ev.left_down for ev in gui_app.mouse_events),
+      ignition=lambda: bool(ui_state.ignition),
+    )
+
     gui_app.add_nav_stack_tick(self._handle_transitions)
     gui_app.push_widget(self)
 
@@ -95,6 +107,7 @@ class MiciMainLayout(Scroller):
     self._alerts_layout._update_state()
 
   def _render(self, _):
+    self._gsr2_ui.poll()
     if not self._setup:
       if self._alerts_layout.active_alerts() > 0:
         self._scroller.scroll_to(self._alerts_layout.rect.x)

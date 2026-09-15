@@ -7,6 +7,7 @@ from openpilot.selfdrive.ui.mici.layouts.settings.device import DeviceLayoutMici
 from openpilot.selfdrive.ui.mici.layouts.settings.developer import DeveloperLayoutMici
 from openpilot.selfdrive.ui.mici.layouts.settings.software import SoftwareLayoutMici
 from openpilot.selfdrive.ui.mici.layouts.settings.firehose import FirehoseLayout
+from openpilot.selfdrive.ui.layouts.settings.ioniq_control import IoniqControlLayout
 from openpilot.system.ui.lib.application import gui_app, FontWeight
 
 
@@ -44,6 +45,10 @@ class SettingsLayout(NavScroller):
     firehose_btn = SettingsBigButton("firehose", "", gui_app.texture("icons_mici/settings/firehose.png", 52, 62))
     firehose_btn.set_click_callback(lambda: gui_app.push_widget(firehose_panel))
 
+    ioniq_panel = IoniqControlLayout()
+    ioniq_btn = SettingsBigButton("ioniq", "", gui_app.texture("icons_mici/settings/firehose.png", 52, 62))
+    ioniq_btn.set_click_callback(lambda: gui_app.push_widget(ioniq_panel))
+
     self._scroller.add_widgets([
       toggles_btn,
       network_btn,
@@ -52,6 +57,7 @@ class SettingsLayout(NavScroller):
       PairBigButton(),
       firehose_btn,
       developer_btn,
+      ioniq_btn,
     ])
 
     self._font_medium = gui_app.font(FontWeight.MEDIUM)

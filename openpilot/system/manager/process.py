@@ -60,6 +60,41 @@ def join_process(process: Process, timeout: float) -> None:
     time.sleep(0.001)
 
 
+# ioniq-control (#176) — manager ne relançait jamais un process mort : une
+# erreur transitoire au boot (audio pas prêt pour micd/soundd, modem pas encore
+# énuméré pour qcomgpsd #155) coûtait la conduite assistée jusqu'au reboot, via
+# processNotRunning (ET.NO_ENTRY) dans selfdrived. On relance, de façon bornée.
+IONIQ_RESPAWN_DELAY_S = 5.0  # laisser le matériel finir de s'énumérer
+IONIQ_RESPAWN_MAX = 3        # au-delà, comportement upstream : l'alerte reste
+
+
+def _ioniq_respawn_if_dead(p, monotonic=time.monotonic, log=cloudlog) -> bool:
+  """Oublie un process mort pour que `start()` le relance.
+
+  Au plus IONIQ_RESPAWN_MAX fois par épisode (réinitialisé par `stop()`), jamais
+  moins de IONIQ_RESPAWN_DELAY_S après la mort constatée. Rend True quand une
+  relance est engagée. Ne touche à rien d'un process vivant ou en cours d'arrêt.
+  """
+  proc = p.proc
+  if proc is None or p.shutting_down or proc.exitcode is None:
+    return False
+  now = monotonic()
+  if p.ioniq_dead_since_s is None:
+    p.ioniq_dead_since_s = now
+    if p.ioniq_respawn_count >= IONIQ_RESPAWN_MAX:
+      log.error(f"{p.name} est mort (code {proc.exitcode}) apres {p.ioniq_respawn_count} relance(s), abandon")
+    return False
+  if p.ioniq_respawn_count >= IONIQ_RESPAWN_MAX:
+    return False
+  if now - p.ioniq_dead_since_s < IONIQ_RESPAWN_DELAY_S:
+    return False
+  p.ioniq_respawn_count += 1
+  p.ioniq_dead_since_s = None
+  log.error(f"{p.name} est mort (code {proc.exitcode}), relance {p.ioniq_respawn_count}/{IONIQ_RESPAWN_MAX}")
+  p.proc = None
+  return True
+
+
 class ManagerProcess(ABC):
   daemon = False
   sigkill = False
@@ -68,6 +103,9 @@ class ManagerProcess(ABC):
   enabled = True
   name = ""
   shutting_down = False
+  # ioniq-control (#176) — état de la relance bornée, cf. _ioniq_respawn_if_dead
+  ioniq_respawn_count = 0
+  ioniq_dead_since_s: float | None = None
 
   @abstractmethod
   def start(self) -> None:
@@ -102,6 +140,9 @@ class ManagerProcess(ABC):
     if self.proc.exitcode is not None:
       self.shutting_down = False
       self.proc = None
+      # ioniq-control (#176) : un arrêt volontaire ouvre un nouvel épisode.
+      self.ioniq_respawn_count = 0
+      self.ioniq_dead_since_s = None
 
     return ret
 
@@ -235,6 +276,7 @@ def ensure_running(procs: ValuesView[ManagerProcess], started: bool, params: Par
       p.stop(block=False)
 
   for p in running:
+    _ioniq_respawn_if_dead(p)  # ioniq-control (#176)
     p.start()
 
   return running

@@ -1,7 +1,41 @@
 import select
+import time
 from struct import pack, unpack_from, calcsize
 
 from openpilot.common.serial import Serial
+from openpilot.common.swaglog import cloudlog
+
+# ioniq-control (#155) — le port diag n'existe et n'est permissionné qu'une fois
+# le modem énuméré. Au branchement à chaud, qcomgpsd démarre pendant cette
+# fenêtre et mourait sur EACCES, sans être jamais relancé par manager.
+IONIQ_PORT_OPEN_TIMEOUT_S = 60.0
+IONIQ_PORT_RETRY_S = 1.0
+
+
+def _ioniq_open_diag_port(opener, timeout_s=IONIQ_PORT_OPEN_TIMEOUT_S, retry_s=IONIQ_PORT_RETRY_S,
+                          monotonic=time.monotonic, sleep=time.sleep, log=cloudlog):
+  """Ouvre le port diag en réessayant tant que le modem énumère (#155).
+
+  Propage l'exception d'origine une fois `timeout_s` dépassé : un modem
+  réellement absent doit rester un échec visible, pas une attente sans fin.
+  """
+  deadline = monotonic() + timeout_s
+  attempt = 0
+  while True:
+    attempt += 1
+    try:
+      return opener()
+    except OSError as e:
+      # OSError et non Exception : `SerialException` en hérite (common/serial.py),
+      # comme `PermissionError` et `FileNotFoundError` — c'est-à-dire tout ce qui
+      # est transitoire ici. Un TypeError ou un ValueError vient d'un appel fautif,
+      # pas d'un modem en retard : le réessayer soixante fois retarderait le
+      # diagnostic d'une minute et noierait les logs.
+      if monotonic() >= deadline:
+        log.error(f"qcomgpsd: port diag indisponible apres {attempt} essai(s), abandon: {e}")
+        raise
+      log.warning(f"qcomgpsd: port diag indisponible ({e}), nouvel essai {attempt}")
+      sleep(retry_s)
 
 
 def _gen_crc16_reflected_table(poly: int) -> list[int]:
@@ -32,7 +66,10 @@ class ModemDiag:
     self.pend = b''
 
   def open_serial(self):
-    serial = Serial("/dev/ttyUSB0", baudrate=115200, rtscts=True, dsrdtr=True, timeout=0, exclusive=True)
+    # ioniq-control (#155) : réessayer au lieu de mourir — cf. en-tête du module.
+    serial = _ioniq_open_diag_port(
+      lambda: Serial("/dev/ttyUSB0", baudrate=115200, rtscts=True, dsrdtr=True, timeout=0, exclusive=True)
+    )
     serial.flush()
     serial.reset_input_buffer()
     serial.reset_output_buffer()
